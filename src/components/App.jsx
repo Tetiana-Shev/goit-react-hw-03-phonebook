@@ -47,6 +47,21 @@ class App extends React.Component {
     }));
   };
 
+  componentDidMount() {
+    const fetchFromLocalStorage = localStorage.getItem('contacts');
+    if (fetchFromLocalStorage) {
+      const savedСontact = JSON.parse(fetchFromLocalStorage);
+      this.setState(() => ({ contacts: [...savedСontact] }));
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { contacts } = this.state;
+    if (contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+    }
+  }
+
   render() {
     return (
       <div className={css.phonebook}>
